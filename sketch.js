@@ -111,7 +111,9 @@ function setup() {
 
   let testCell = new Cell({
     position: createVector(1,2,3),
-    velocity: createVector(-1,-2,-3)
+    velocity: createVector(-1,-2,-3),
+    diameter: 20, // in pixels
+    life: 60*3
   });
   
   console.log("Testing cell:");

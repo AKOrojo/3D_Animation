@@ -8,6 +8,10 @@
   //--Begin internal class variables------------------------
   //--------------------------------------------------------
   
+  this.position = position;
+  this.velocity = velocity;
+  this.diameter = diameter;
+  this.life = life;
   //
   // Note: internal variables that aren't for public use often start with '_'
   //        like '_position'
@@ -96,12 +100,12 @@
     // 1. call internal accelerate function to apply acceleration
 
     // YOUR CODE GOES HERE
-    this._accelerate
+    this._accelerate();
 
     // 2. add the velocity to the position to "move" the cell
     
     // YOUR CODE GOES HERE
-    this._position.add(this._velocity);
+    this._position + this._velocity;
     
   }
 
@@ -128,6 +132,64 @@
   {
     return this._position;
   }
+
+  /**
+   * Set position safely.
+   */
+
+   this.setDiameter = function(diameter)
+   {
+     this._diameter = diameter;
+   }
+ 
+ 
+  /**
+   * Get position safely.
+   */
+
+  this.getDiameter = function()
+  {
+    return this._diameter;
+  }
+
+  /**
+   * Set position safely.
+   */
+
+   this.setVelocity = function(velocity)
+   {
+     this._velocity = velocity;
+   }
+ 
+ 
+  /**
+   * Get position safely.
+   */
+
+  this.getVelocity = function()
+  {
+    return this._velocity;
+  }
+
+  /**
+   * Set position safely.
+   */
+
+   this.setLife = function(life)
+   {
+     this._life = life;
+   }
+ 
+ 
+  /**
+   * Get position safely.
+   */
+
+  this.getLife = function()
+  {
+    return this._life;
+  }
+
 
   /**
    * ------------------------------------------------------------------ 
