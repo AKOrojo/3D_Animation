@@ -29,6 +29,16 @@ function createCellsArray(maxCells)
   // 2. add a new Cell to the array *maxCells* times (for loop?)
   // 2b. maybe use random vectors for position and velocity
   // 3. return the array variable
+  for (i = 0; i < maxCells; i++ ){
+      let randCell = new Cell({
+      position: p5.Vector.random3D().mult(2),
+      diameter: random(20, 40), // in pixels
+    });
+    cells.push(randCell);
+  }
+
+  return cells
+
 }
 
 
@@ -43,6 +53,13 @@ function drawCells3D(cellsArray){
   // 2.1. translate to cell's position
   // 2.2 draw a sphere with the cell diameter
   // 2.3 pop the drawing matrix
+  for (let cell of cellsArray) {
+    cell.update();
+    push();
+    translate(cell._position.x, cell._position.y, cell._position.z);
+    circle(cell._position.x, cell._position.y, cell.diameter);
+    pop();
+  }
 }
 
 
@@ -60,6 +77,12 @@ function checkCollision(cell1, cell2)
  // 1. find the distance between the two cells using p5.Vector's dist() function
  // 2. if it is less than the sum of their radii, they are colliding
  // 3. return whether they are colliding, or not 
+ if(dist(cell1._position.x, cell1._position.y, cell2._position.x, cell2._position.y) < (cell1.diameter/2) + (cell2.diameter/2))
+ {
+   return true;
+ } else {
+  return false;
+ }
 }
 
 
@@ -114,14 +137,15 @@ function setup() {
     velocity: createVector(-1,-2,-3),
     diameter: 20, // in pixels
     life: 60*3
-  });
-  
+  }); 
   console.log("Testing cell:");
   console.log(testCell);
 
   // This is for part 2: creating a list of cells
-  // cells = createCellsArray(5);
-  // console.log(cells)
+  cells = createCellsArray(5);
+  console.log(cells)
+
+
 }
 
 
@@ -145,7 +169,7 @@ function draw() {
   
   
   collideCells(cells); // handle collisions
-  constrainCells(cells, createVector(0,0,0), width); // keep cells in the world
+  //constrainCells(cells, createVector(0,0,0), width); // keep cells in the world
   drawCells3D(cells); // draw the cells
 
   // draw world boundaries

@@ -8,10 +8,6 @@
   //--Begin internal class variables------------------------
   //--------------------------------------------------------
   
-  this.position = position;
-  this.velocity = velocity;
-  this.diameter = diameter;
-  this.life = life;
   //
   // Note: internal variables that aren't for public use often start with '_'
   //        like '_position'
@@ -42,13 +38,13 @@
   //------------------------------------------------------
   if (velocity === undefined) { // if it wasn't passed in
     // create default vector
-    this._velocity = 1;   
+    this._velocity = createVector(0,0,0);   
   }
   else this._velocity = velocity;
 
   if (diameter === undefined) { // if it wasn't passed in
   // create default vector
-    this._diameter = 0;   
+    this._diameter = 1;   
   }
   else this._diameter = diameter;
 
@@ -100,12 +96,12 @@
     // 1. call internal accelerate function to apply acceleration
 
     // YOUR CODE GOES HERE
-    this._accelerate();
+    this._accelerate()
 
     // 2. add the velocity to the position to "move" the cell
     
     // YOUR CODE GOES HERE
-    this._position + this._velocity;
+    this._position.add(this._velocity);
     
   }
 
@@ -171,24 +167,6 @@
     return this._velocity;
   }
 
-  /**
-   * Set position safely.
-   */
-
-   this.setLife = function(life)
-   {
-     this._life = life;
-   }
- 
- 
-  /**
-   * Get position safely.
-   */
-
-  this.getLife = function()
-  {
-    return this._life;
-  }
 
 
   /**
