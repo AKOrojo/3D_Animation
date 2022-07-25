@@ -30,15 +30,15 @@ function createCellsArray(maxCells)
   // 2b. maybe use random vectors for position and velocity
   // 3. return the array variable
   for (i = 0; i < maxCells; i++ ){
-      let randCell = new Cell({
-      position: p5.Vector.random3D().mult(2),
-      diameter: random(20, 40), // in pixels
-    });
-    cells.push(randCell);
-  }
+    let randCell = new Cell({
+    position: p5.Vector.random3D().mult(100),
+    diameter: random(20, 40), // in pixels
+    life: random(1, 10)
+  });
+  cells.push(randCell);
+}
 
-  return cells
-
+return cells
 }
 
 
@@ -56,8 +56,8 @@ function drawCells3D(cellsArray){
   for (let cell of cellsArray) {
     cell.update();
     push();
-    translate(cell._position.x, cell._position.y, cell._position.z);
-    circle(cell._position.x, cell._position.y, cell.diameter);
+    translate(cell.getPosition().x, cell.getPosition().y, cell.getPosition().z);
+    circle(cell.getPosition().x, cell.getPosition().y, cell.getDiameter());
     pop();
   }
 }
@@ -76,13 +76,13 @@ function checkCollision(cell1, cell2)
  //  
  // 1. find the distance between the two cells using p5.Vector's dist() function
  // 2. if it is less than the sum of their radii, they are colliding
- // 3. return whether they are colliding, or not 
- if(dist(cell1._position.x, cell1._position.y, cell2._position.x, cell2._position.y) < (cell1.diameter/2) + (cell2.diameter/2))
- {
-   return true;
- } else {
-  return false;
- }
+ // 3. return whether they are colliding, or not
+  let r2 = (cell1.getDiameter() / 2) + (cell2.getDiameter() / 2)
+  if (dist(cell1.getPosition().x, cell1.getPosition().y, cell2.getPosition().x, cell2.getPosition().y < r2)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 
@@ -103,7 +103,7 @@ function collideCells(cellsArray)
           // get direction of collision, from cell2 to cell1
           let collisionDirection = p5.Vector.sub(cell1.getPosition(), cell2.getPosition()).normalize();
           cell2.applyForce(collisionDirection);
-          cell1.applyForce(collisionDirection.mult(-1)); // opposite direction
+          cell1.applyForce(collisionDirection.mult(-2)); // opposite direction
         }
       }
     }
@@ -123,6 +123,27 @@ function constrainCells(cellsArray, worldCenterPos, worldDiameter)
   }
 }
 
+function indexOf(string, character) {
+  let i=0;
+  while(i < string.length){
+      if(string[i] == character){  
+          return i
+      }
+      i++                          
+  }
+  return -1;
+}
+
+
+function  handleLife(cellsArray)
+{
+  for (let cell of cellsArray){
+    if(cell.getLife() >= 0){
+      index = indexOf(cell.getLife(), "0");
+      cell.splice(index, 1);
+    }
+  }
+}
 
 
 
@@ -134,18 +155,15 @@ function setup() {
 
   let testCell = new Cell({
     position: createVector(1,2,3),
-    velocity: createVector(-1,-2,-3),
-    diameter: 20, // in pixels
-    life: 60*3
-  }); 
+    velocity: createVector(-1,-2,-3)
+  });
+  
   console.log("Testing cell:");
   console.log(testCell);
 
   // This is for part 2: creating a list of cells
   cells = createCellsArray(5);
   console.log(cells)
-
-
 }
 
 
@@ -167,9 +185,9 @@ function draw() {
   fill(220);
   ambientMaterial(80, 202, 94); // magenta material
   
-  
+  // handleLife(cells)
   collideCells(cells); // handle collisions
-  //constrainCells(cells, createVector(0,0,0), width); // keep cells in the world
+  constrainCells(cells, createVector(0,0,0), width); // keep cells in the world
   drawCells3D(cells); // draw the cells
 
   // draw world boundaries
