@@ -2,7 +2,7 @@
  * 
  * @param {Object} (optional) position, velocity, diameter properties
  */
- function Cell({position, velocity, diameter, life}) {
+ function Cell({position, velocity, diameter, life, type}) {
  
   //--------------------------------------------------------
   //--Begin internal class variables------------------------
@@ -36,6 +36,11 @@
     this._life = 100;   
   }
   else this._life = life;
+
+  if (type === undefined) { 
+    this._type = 0;   
+  }
+  else this._type = type;
   //----------------------------------------------------------
   // Exercise:
   // Do the same for:
@@ -178,6 +183,22 @@
   this.getLife = function () {
     return this._life;
   };
+
+   /**
+   * Set life safely.
+   */
+
+    this.setType = function (type) {
+      this._type = type;
+    };
+  
+    /**
+     * Get life safely.
+     */
+  
+    this.getType = function () {
+      return this._types;
+    };
 
   /**
    * ------------------------------------------------------------------ 

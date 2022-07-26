@@ -29,11 +29,15 @@ function createCellsArray(maxCells)
   // 2. add a new Cell to the array *maxCells* times (for loop?)
   // 2b. maybe use random vectors for position and velocity
   // 3. return the array variable
+  randType = ["Torus", "Sphere"]
+  
+
   for (i = 0; i < maxCells; i++ ){
     let randCell = new Cell({
     position: p5.Vector.random3D().mult(100),
     diameter: random(20, 40), // in pixels
     life: floor(random(0, 1000)),
+    type: randType[floor(randIndex = random(1,3))]
   });
   cells.push(randCell);
 }
