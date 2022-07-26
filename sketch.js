@@ -123,23 +123,11 @@ function constrainCells(cellsArray, worldCenterPos, worldDiameter)
   }
 }
 
-function indexOf(string, character) {
-  let i=0;
-  while(i < string.length){
-      if(string[i] == character){  
-          return i
-      }
-      i++                          
-  }
-  return -1;
-}
-
-
 function  handleLife(cellsArray)
 {
   for (let cell of cellsArray){
     if(cell.getLife() >= 0){
-      index = indexOf(cell.getLife(), "0");
+      index = cell.getLife().indexOf("0");
       cell.splice(index, 1);
     }
   }

@@ -103,7 +103,7 @@
 
     //Reduce Life
 
-    this._life -= 1;
+    this._life = this._life - 1;
     
   }
 
