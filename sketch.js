@@ -33,10 +33,12 @@ function createCellsArray(maxCells)
     let randCell = new Cell({
     position: p5.Vector.random3D().mult(100),
     diameter: random(20, 40), // in pixels
-    life: random(1, 10)
+    life: floor(random(0, 1000)),
   });
   cells.push(randCell);
 }
+
+
 
 return cells
 }
@@ -57,7 +59,7 @@ function drawCells3D(cellsArray){
     cell.update();
     push();
     translate(cell.getPosition().x, cell.getPosition().y, cell.getPosition().z);
-    circle(cell.getPosition().x, cell.getPosition().y, cell.getDiameter());
+    sphere(cell.getDiameter())
     pop();
   }
 }
@@ -77,8 +79,9 @@ function checkCollision(cell1, cell2)
  // 1. find the distance between the two cells using p5.Vector's dist() function
  // 2. if it is less than the sum of their radii, they are colliding
  // 3. return whether they are colliding, or not
-  let r2 = (cell1.getDiameter() / 2) + (cell2.getDiameter() / 2)
-  if (dist(cell1.getPosition().x, cell1.getPosition().y, cell2.getPosition().x, cell2.getPosition().y < r2)) {
+ let r1 = dist(cell1.getPosition().x, cell1.getPosition().y, cell2.getPosition().x, cell2.getPosition().y);
+ let r2 = (cell1.getDiameter() / 2) + (cell2.getDiameter() / 2);
+  if (r1 < r2) {
     return true;
   } else {
     return false;
@@ -123,12 +126,12 @@ function constrainCells(cellsArray, worldCenterPos, worldDiameter)
   }
 }
 
+
 function  handleLife(cellsArray)
 {
-  for (let cell of cellsArray){
-    if(cell.getLife() >= 0){
-      index = cell.getLife().indexOf("0");
-      cell.splice(index, 1);
+  for (let i = 0; i < cellsArray.length; i++){
+    if(cellsArray[i].getLife() == 0){
+      cellsArray.splice(i, 1)
     }
   }
 }
@@ -155,6 +158,7 @@ function setup() {
 }
 
 
+
 ///----------------------------------------------------------------------------
 /// p5js draw function 
 ///---------------------------------------------------------------------------
@@ -173,7 +177,7 @@ function draw() {
   fill(220);
   ambientMaterial(80, 202, 94); // magenta material
   
-  // handleLife(cells)
+  handleLife(cells)
   collideCells(cells); // handle collisions
   constrainCells(cells, createVector(0,0,0), width); // keep cells in the world
   drawCells3D(cells); // draw the cells
