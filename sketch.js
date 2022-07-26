@@ -37,7 +37,7 @@ function createCellsArray(maxCells)
     position: p5.Vector.random3D().mult(100),
     diameter: random(20, 40), // in pixels
     life: floor(random(0, 1000)),
-    type: randType[floor(randIndex = random(1,3))]
+    type: randType[floor(random(1,3))]
   });
   cells.push(randCell);
 }
