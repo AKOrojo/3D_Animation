@@ -231,7 +231,7 @@ function draw() {
   collideCells(cells, 1); // handle collisions
   constrainCells(cells, createVector(0, 0, 0), width); // keep cells in the world
   drawCells3D(cells); // draw the cells
-  mitosis(cells);
+  // mitosis(cells);
 
   fill(300);
   ambientMaterial(255, 0, 255);
