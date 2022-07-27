@@ -168,37 +168,25 @@ function handleLife(cellsArray) {
   }
 }
 
-function cellSplit(cellsArray) {
+function mitosis(cellsArray) {
   for (let i = 0; i < cellsArray.length; i++) {
     if (cellsArray[i].getLife() < 10) {
       probability = floor(random(0, 100));
       if (probability <= 55) {
-        var CellA = mitosis();
-        var CellB = mitosis();
+        let CellA = new Cell({
+          position: p5.Vector.random3D().mult(100),
+          diameter: random(20, 40),
+        });
+        let CellB = {
+          position: p5.Vector.random3D().mult(100),
+          diameter: random(20, 40),
+        };
         cellsArray.push(CellA);
         cellsArray.push(CellB);
-        cellsArray.splice(i, 1);
       }
+      cellsArray.splice(i, 1);
     }
   }
-}
-
-function mitosis() {
-  let CellA = new Cell({
-    position: p5.Vector.random3D().mult(100),
-    diameter: random(20, 40), // in pixels
-    life: floor(random(0, 1000)),
-    type: randType[Math.floor(Math.random() * 2 + 0)],
-  });
-
-  let CellB = {
-    position: p5.Vector.random3D().mult(100),
-    diameter: random(20, 40), // in pixels
-    life: floor(random(0, 1000)),
-    type: randType[Math.floor(Math.random() * 2 + 0)],
-  };
-
-  return CellA, CellB;
 }
 
 function setup() {
@@ -243,7 +231,7 @@ function draw() {
   collideCells(cells, 1); // handle collisions
   constrainCells(cells, createVector(0, 0, 0), width); // keep cells in the world
   drawCells3D(cells); // draw the cells
-  //cellSplit(cells);
+  mitosis(cells);
 
   fill(300);
   ambientMaterial(255, 0, 255);
@@ -251,7 +239,6 @@ function draw() {
   reverseCollideCells(cells1); // handle collisions
   constrainCells(cells1, createVector(0, 0, 0), width); // keep cells in the world
   drawCells3D(cells1); // draw the cells
-  //cellSplit(cells1);
 
   // draw world boundaries
   ambientMaterial(255, 102, 94); // magenta material for subsequent objects
